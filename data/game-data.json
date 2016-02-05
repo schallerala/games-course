@@ -139,10 +139,25 @@
             // TODO arseny
         },
         "C4": {
-
+            "type": "death",
+            "story": "Explosion"
         },
-        "C5": {},
-        "C6": {},
+        "C5": {
+            "type": "death",
+            "story": [
+                "Huge alien in a shape of a snack comes out of the ground",
+                "and kill you before you can start to react..."
+            ]
+        },
+        "C6": {
+            "type": "death",
+            "story": [
+                "A small alien is on front of you,",
+                "but you when you want to fire with your weapon,",
+                "it sounds bad and you are unable to shot at him.",
+                "Lucky alien..."
+            ]
+        },
         "D1": {},
         "D2": {},
         "D3": {},
