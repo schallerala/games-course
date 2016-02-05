@@ -1,0 +1,158 @@
+"AYNIK": {
+    "locations": {
+        "A1": {
+            "type": "death",
+            "story": "Comrade tries to shot down an alien and kills you"
+        },
+        "A2": {
+            "type": "condition",
+            "conditions": [
+                {
+                    "type": "teammate"
+                }
+            ],
+            "dontComplete": "die"
+        },
+        "A3": {
+            "type": "condition",
+            "conditions": [
+                {
+                    "type": "actions",
+                    "actions": [
+                        {
+                            "action": "hide",
+                            "context": "hide behind the tank"
+                        },
+                        {
+                            "action": "escape",
+                            "addition": "jetpack"
+                        }
+                    ],
+                    "allOrAny": "any"
+                }
+            ],
+            "dontComplete": "die"
+        },
+        "A4": {
+            "type": "obstacle",
+            "linkedMap": ["B4"],
+            "obstacle": "Crashed aircraft"
+        },
+        "A5": {
+            "type": "itemsDiscovery",
+            "items": [
+                {
+                    "type": "grenade"
+                }
+            ],
+            "context": "Found on dead soldier"
+        },
+        "A6": {
+            "type": "death",
+            "story": [
+                "2 aliens come out of nowhere,",
+                "in the panic you have the reflex to kill one",
+                "but the other one put an end to your escape..."
+            ]
+        },
+        "B1": {
+            "type": "choice",
+            "choices": [
+                {
+                    "type": "action",
+                    "action": "escape",
+                    "context": "Escape the big but slow alien"
+                },
+                {
+                    "type": "action",
+                    "action": "attack",
+                    "attack": {
+                        "attackResult": "success",
+                        "result": {
+                            "type": "choice",
+                            "choices": [
+                                {
+                                    "type": "action",
+                                    "action": "continue"
+                                },
+                                {
+                                    "type": "action",
+                                    "action": "teamup"
+                                }
+                            ]
+                        },
+                        "context": [
+                            "A soldier who was fighting this alien,",
+                            "put it in miserable condition",
+                            "it's how you could defeat this beast!"
+                        ]
+                    }
+                }
+            ]
+        },
+        "B2": {
+            "type": "itemsDiscovery",
+            "items": [
+                {
+                    "type": "shield"
+                }
+            ],
+            "context": [
+                "Dead soldier with a picture of his wife and kid in his hand",
+                "has a big shield"
+            ]
+        },
+        "B3": {
+            "type": "death",
+            "story": "Quicksand"
+        },
+        "B4": {
+            "type": "obstacle",
+            "linkedMap": ["A4"],
+            "obstacle": "Crashed aircraft"
+        },
+        "B5": {
+            "type": "condition",
+            "conditions": [
+                {
+                    "type": "item",
+                    "item": "grenade"
+                },
+                {
+                    "type": "item",
+                    "item": "shield"
+                }
+            ],
+            "context": "You are surrounded by aliens!"
+        },
+        "B6": {
+            "type": "obstacle",
+            "obstacle": "Tank is on fire"
+        },
+        "C1": {
+            // TODO arseny
+        },
+        "C2": {
+            // TODO arseny
+        },
+        "C3": {
+            // TODO arseny
+        },
+        "C4": {
+
+        },
+        "C5": {},
+        "C6": {},
+        "D1": {},
+        "D2": {},
+        "D3": {},
+        "D4": {},
+        "D5": {},
+        "D6": {},
+        "E1": {},
+        "E2": {},
+        "E3": {},
+        "E4": {},
+        "E5": {},
+        "E6": {}}
+}
