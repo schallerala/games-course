@@ -1,3 +1,4 @@
+{
 "AYNIK": {
     "locations": {
         "A1": {
@@ -10,28 +11,22 @@
                 {
                     "type": "teammate"
                 }
-            ],
-            "dontComplete": "die"
+            ]
         },
         "A3": {
             "type": "condition",
             "conditions": [
                 {
-                    "type": "actions",
-                    "actions": [
-                        {
-                            "action": "hide",
-                            "context": "hide behind the tank"
-                        },
-                        {
-                            "action": "escape",
-                            "addition": "jetpack"
-                        }
-                    ],
-                    "allOrAny": "any"
+                    "type": "action",
+                    "action": "hide",
+                    "context": "hide behind the tank"
+                },
+                {
+                    "type": "action",
+                    "action": "jetpack"
                 }
             ],
-            "dontComplete": "die"
+            "any": true
         },
         "A4": {
             "type": "obstacle",
@@ -169,5 +164,7 @@
         "E3": {},
         "E4": {},
         "E5": {},
-        "E6": {}}
+        "E6": {}
+    }
+}
 }
