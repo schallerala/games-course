@@ -1,5 +1,7 @@
 package map;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import java.util.ArrayList;
 
 /**
@@ -7,17 +9,28 @@ import java.util.ArrayList;
  */
 public class LocationObstacle extends Location {
 
-    private ArrayList<Location> linkedMap;
+    private ArrayList<Position> linkedLocation;
     public String obstacle;
 
-    public LocationObstacle(Position position, String obstacle) {
-        super(position, LocationTypes.obstacle);
-        this.obstacle = obstacle;
-
-        this.linkedMap = new ArrayList<>();
+    public LocationObstacle(JsonNode rawLocation) {
+        super(LocationTypes.obstacle, rawLocation);
     }
 
-    public void addLinkedMap (Location linkedLocation) {
-        this.linkedMap.add(linkedLocation);
+    @Override
+    public void init() {
+        this.linkedLocation = new ArrayList<>();
+    }
+
+    @Override
+    protected void compileRawLocation(JsonNode rawLocation) {
+        this.obstacle = rawLocation.findPath("obstacle").asText();
+        for (JsonNode position : rawLocation.findPath("linkedLocation")) {
+            try {
+                this.linkedLocation.add(new Position(position.asText()));
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -1,5 +1,15 @@
 {
 "AYNIK": {
+    "actions": [
+        "jetpack",
+        "escape",
+        "attack",
+        "useItem"
+    ],
+    "items": [
+        "grenade",
+        "shield"
+    ],
     "locations": {
         "A1": {
             "type": "death",
@@ -11,6 +21,9 @@
                 {
                     "type": "teammate"
                 }
+            ],
+            "context": [
+                "2 aliens are on front of you"
             ]
         },
         "A3": {
@@ -30,15 +43,13 @@
         },
         "A4": {
             "type": "obstacle",
-            "linkedMap": ["B4"],
+            "linkedLocation": ["B4"],
             "obstacle": "Crashed aircraft"
         },
         "A5": {
             "type": "itemsDiscovery",
             "items": [
-                {
-                    "type": "grenade"
-                }
+                "grenade"
             ],
             "context": "Found on dead soldier"
         },
@@ -88,9 +99,7 @@
         "B2": {
             "type": "itemsDiscovery",
             "items": [
-                {
-                    "type": "shield"
-                }
+                "shield"
             ],
             "context": [
                 "Dead soldier with a picture of his wife and kid in his hand",
@@ -103,7 +112,7 @@
         },
         "B4": {
             "type": "obstacle",
-            "linkedMap": ["A4"],
+            "linkedLocation": ["A4"],
             "obstacle": "Crashed aircraft"
         },
         "B5": {
@@ -116,6 +125,11 @@
                 {
                     "type": "item",
                     "item": "shield"
+                },
+                {
+                    "type": "action",
+                    "action": "use",
+                    "use": "grenade"
                 }
             ],
             "context": "You are surrounded by aliens!"

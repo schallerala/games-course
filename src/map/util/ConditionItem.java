@@ -1,17 +1,25 @@
 package map.util;
 
+import core.AynikItemsRepo;
+import player.item.Item;
+
 /**
  * Created by schaller on 08/02/16.
  */
 public class ConditionItem extends Condition {
 
-    public String item;
-    // TODO add item
+    public String itemStr;
+    private Item item;
 
-    public ConditionItem(String item) {
+    public ConditionItem(String itemStr) {
+        super(ConditionTypes.item);
+        this.itemStr = itemStr;
+        this.item = AynikItemsRepo.getInstance().find(this.itemStr);
+    }
+
+    public ConditionItem(Item item) {
         super(ConditionTypes.item);
         this.item = item;
-        // TODO translate string item to object with items repo
     }
 
     @Override

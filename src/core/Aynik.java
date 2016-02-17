@@ -1,6 +1,8 @@
 package core;
 
 import compiler.AynikCompiler;
+import compiler.CompilerMissingNodeException;
+import map.LocationTypes;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +13,18 @@ import java.io.IOException;
 public class Aynik {
 
     private static final String GAME_FILE_PATH = "data/game-data.json";
+
     private static AynikCompiler compiler;
+
+    private AynikTicker ticker;
+    private AynikItemsRepo itemsRepo;
+    private AynikMap map;
+
+    public Aynik(AynikTicker ticker, AynikItemsRepo itemsRepo, AynikMap map) {
+        this.ticker = ticker;
+        this.itemsRepo = itemsRepo;
+        this.map = map;
+    }
 
     public static void main (String[] args) {
         try {
@@ -19,9 +32,26 @@ public class Aynik {
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(0);
+        } catch (CompilerMissingNodeException e) {
+            e.printStackTrace();
+            System.exit(0);
         }
 
-        compiler.prepareGame(new Aynik());
+        try {
+            compiler.prepareGame();
+        } catch (CompilerMissingNodeException e) {
+            e.printStackTrace();
+        }
+
+        AynikTicker ticker = AynikTicker.getInstance();
+        AynikItemsRepo itemsRepo = AynikItemsRepo.getInstance();
+        AynikMap map = AynikMap.getInstance();
+        Aynik game = new Aynik(ticker, itemsRepo, map);
+        game.startPlaying();
+    }
+
+    public void startPlaying () {
+        System.out.println("ready");
     }
 
 }
