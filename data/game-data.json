@@ -1,4 +1,15 @@
+{
 "AYNIK": {
+    "actions": [
+        "jetpack",
+        "escape",
+        "attack",
+        "useItem"
+    ],
+    "items": [
+        "grenade",
+        "shield"
+    ],
     "locations": {
         "A1": {
             "type": "death",
@@ -11,39 +22,34 @@
                     "type": "teammate"
                 }
             ],
-            "dontComplete": "die"
+            "context": [
+                "2 aliens are on front of you"
+            ]
         },
         "A3": {
             "type": "condition",
             "conditions": [
                 {
-                    "type": "actions",
-                    "actions": [
-                        {
-                            "action": "hide",
-                            "context": "hide behind the tank"
-                        },
-                        {
-                            "action": "escape",
-                            "addition": "jetpack"
-                        }
-                    ],
-                    "allOrAny": "any"
+                    "type": "action",
+                    "action": "hide",
+                    "context": "hide behind the tank"
+                },
+                {
+                    "type": "action",
+                    "action": "jetpack"
                 }
             ],
-            "dontComplete": "die"
+            "any": true
         },
         "A4": {
             "type": "obstacle",
-            "linkedMap": ["B4"],
+            "linkedLocation": ["B4"],
             "obstacle": "Crashed aircraft"
         },
         "A5": {
             "type": "itemsDiscovery",
             "items": [
-                {
-                    "type": "grenade"
-                }
+                "grenade"
             ],
             "context": "Found on dead soldier"
         },
@@ -65,22 +71,17 @@
                 },
                 {
                     "type": "action",
+                    "action": "jetpack",
+                    "context": "Escape the big but slow alien"
+                },
+                {
+                    "type": "action",
                     "action": "attack",
                     "attack": {
-                        "attackResult": "success",
-                        "result": {
-                            "type": "choice",
-                            "choices": [
-                                {
-                                    "type": "action",
-                                    "action": "continue"
-                                },
-                                {
-                                    "type": "action",
-                                    "action": "teamup"
-                                }
-                            ]
-                        },
+                        "success": true,
+                        "rewards": [
+                            "teammate"
+                        ],
                         "context": [
                             "A soldier who was fighting this alien,",
                             "put it in miserable condition",
@@ -93,9 +94,7 @@
         "B2": {
             "type": "itemsDiscovery",
             "items": [
-                {
-                    "type": "shield"
-                }
+                "shield"
             ],
             "context": [
                 "Dead soldier with a picture of his wife and kid in his hand",
@@ -108,7 +107,7 @@
         },
         "B4": {
             "type": "obstacle",
-            "linkedMap": ["A4"],
+            "linkedLocation": ["A4"],
             "obstacle": "Crashed aircraft"
         },
         "B5": {
@@ -121,6 +120,11 @@
                 {
                     "type": "item",
                     "item": "shield"
+                },
+                {
+                    "type": "action",
+                    "action": "use",
+                    "use": "grenade"
                 }
             ],
             "context": "You are surrounded by aliens!"
@@ -169,5 +173,7 @@
         "E3": {},
         "E4": {},
         "E5": {},
-        "E6": {}}
+        "E6": {}
+    }
+}
 }
