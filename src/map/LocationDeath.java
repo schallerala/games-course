@@ -1,6 +1,7 @@
 package map;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import compiler.CompilerHelper;
 
 /**
  * Created by schaller on 07/02/16.
@@ -15,17 +16,10 @@ public class LocationDeath extends Location {
 
     @Override
     protected void compileRawLocation(JsonNode rawLocation) {
-        JsonNode storyJN = rawLocation.findPath("story");
-        if (storyJN.isArray()) {
-            this.story = "";
-            for (JsonNode storyJNItem : storyJN) {
-                this.story += storyJNItem.asText() + " ";
-            }
-            this.story.trim();
-        }
-        else
-        {
-            this.story = storyJN.asText();
+        CompilerHelper compilerHelper = CompilerHelper.getInstance();
+
+        if (rawLocation.has("story")) {
+            this.story = compilerHelper.getString(rawLocation.findPath("story"));
         }
     }
 }

@@ -13,6 +13,9 @@ public abstract class Location {
         this.type = type;
 
         this.init();
+
+        if (rawLocation == null) return;
+
         this.compileRawLocation(rawLocation);
     }
 

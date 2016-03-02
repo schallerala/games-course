@@ -1,6 +1,7 @@
 package map;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import compiler.CompilerHelper;
 import core.AynikItemsRepo;
 import player.item.Item;
 
@@ -33,19 +34,11 @@ public class LocationItemsDiscovery extends Location {
         }
 
         // context
-        JsonNode contextJN = rawLocation.findPath("context");
-        if (contextJN.isArray()) {
-            this.context = "";
-            for (JsonNode contextJNItem : contextJN) {
-                this.context += contextJNItem.asText() + " ";
-            }
-            this.context.trim();
-        }
-        else
-        {
-            this.context = contextJN.asText();
-        }
+        CompilerHelper compilerHelper = CompilerHelper.getInstance();
 
+        if (rawLocation.has("context")) {
+            this.context = compilerHelper.getString(rawLocation.findPath("context"));
+        }
     }
 
     public void addItem (Item newItem) {

@@ -16,6 +16,11 @@ public class LocationObstacle extends Location {
         super(LocationTypes.obstacle, rawLocation);
     }
 
+    public LocationObstacle(String obstacle) {
+        super(LocationTypes.obstacle, null);
+        this.obstacle = obstacle;
+    }
+
     @Override
     public void init() {
         this.linkedLocation = new ArrayList<>();

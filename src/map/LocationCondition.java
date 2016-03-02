@@ -1,6 +1,7 @@
 package map;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import compiler.CompilerHelper;
 import core.AynikItemsRepo;
 import map.util.ConditionAction;
 import map.util.ConditionTeammate;
@@ -54,8 +55,11 @@ public class LocationCondition extends Location {
     @Override
     protected void compileRawLocation(JsonNode rawLocation) {
         AynikItemsRepo itemRepo = AynikItemsRepo.getInstance();
+        CompilerHelper compilerHelper = CompilerHelper.getInstance();
 
-        if (rawLocation.has("context")) this.context = rawLocation.findPath("context").asText();
+        if (rawLocation.has("context")) {
+            this.context = compilerHelper.getString(rawLocation.findPath("context"));
+        }
 
         Item itemForCondition;
         Condition newCondition;

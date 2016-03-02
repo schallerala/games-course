@@ -79,11 +79,9 @@ public class AynikCompiler {
             return null;
         }
 
-        String locationType = locationJN.findPath("type").asText();
-
         Location newLocation = null;
 
-        switch (locationType) {
+        switch (locationJN.findPath("type").asText()) {
             case "choice":
                 newLocation = new LocationChoice(locationJN);
                 break;
@@ -100,7 +98,7 @@ public class AynikCompiler {
                 newLocation = new LocationObstacle(locationJN);
                 break;
             default:
-                System.out.println("location type mismatch");
+                newLocation = new LocationObstacle("Unreachable");
         }
 
         return newLocation;
