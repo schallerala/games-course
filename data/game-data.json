@@ -71,22 +71,17 @@
                 },
                 {
                     "type": "action",
+                    "action": "jetpack",
+                    "context": "Escape the big but slow alien"
+                },
+                {
+                    "type": "action",
                     "action": "attack",
                     "attack": {
-                        "attackResult": "success",
-                        "result": {
-                            "type": "choice",
-                            "choices": [
-                                {
-                                    "type": "action",
-                                    "action": "continue"
-                                },
-                                {
-                                    "type": "action",
-                                    "action": "teamup"
-                                }
-                            ]
-                        },
+                        "success": true,
+                        "rewards": [
+                            "teammate"
+                        ],
                         "context": [
                             "A soldier who was fighting this alien,",
                             "put it in miserable condition",
