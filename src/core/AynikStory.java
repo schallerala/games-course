@@ -9,6 +9,7 @@ public class AynikStory {
     private static AynikStory ourInstance = new AynikStory();
 
     public ArrayList<String> intro;
+    public ArrayList<String> end;
 
     public static AynikStory getInstance() {
         return ourInstance;
@@ -16,6 +17,7 @@ public class AynikStory {
 
     private AynikStory() {
         this.intro = new ArrayList<>();
+        this.end = new ArrayList<>();
     }
 
     public void addToIntro (String part) {
@@ -23,15 +25,30 @@ public class AynikStory {
     }
 
     public void printIntro() {
-//        try {
+        try {
             for (String part : intro) {
                 System.out.println(part);
-                // fixme
-//                Thread.sleep(700);
+                Thread.sleep(700);
             }
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.out.println();
+    }
+
+    public void printEnd() {
+        try {
+            for (String part : end) {
+                System.out.println(part);
+                Thread.sleep(700);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println();
+    }
+
+    public void addToEnd(String part) {
+        this.end.add(part);
     }
 }

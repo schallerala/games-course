@@ -24,6 +24,7 @@ public class Player {
     public ArrayList<Item> items;
 
     public boolean usedJetpack;
+    public boolean win;
 
     public static Player getInstance() {
         return ourInstance;
@@ -34,6 +35,7 @@ public class Player {
         this.asTeammate = false;
         this.usedJetpack = false;
         this.items = new ArrayList<>();
+        this.win = false;
     }
 
     public boolean setName(String name) {
@@ -52,6 +54,10 @@ public class Player {
 
     public boolean isAlive() {
         return alive;
+    }
+
+    public boolean won() {
+        return win;
     }
 
     public void die() {

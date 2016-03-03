@@ -45,6 +45,11 @@ public class Location {
             this.setContext(compilerHelper.getString(rawLocation.get("context")));
         }
 
+        if ( ! rawLocation.has("actions")) {
+            this.actions.add( new ActionContinue() );
+            return;
+        }
+
         for (JsonNode actionJN : rawLocation.get("actions")) {
             if (actionJN.isObject()) {
                 this.compileComplexAction(actionJN);
@@ -58,6 +63,7 @@ public class Location {
                 }
             }
         }
+
     }
 
     private void compileComplexAction(JsonNode actionJN) {

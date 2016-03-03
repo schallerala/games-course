@@ -57,9 +57,7 @@ public class AynikConsole extends Observable {
         while ( ! playerNameSet) {
             System.out.println("What is your name?");
             System.out.print("My name is:");
-//            fixme
-//            playerNameSet = player.setName(reader.nextLine().trim());
-            playerNameSet = player.setName("Alain");
+            playerNameSet = player.setName(reader.nextLine().trim());
 
             if ( ! playerNameSet) System.out.println("Give a valid name please");
         }
@@ -102,6 +100,8 @@ public class AynikConsole extends Observable {
             }
             return;
         }
+
+        System.out.println("################################");
 
         HashMap<Character, Action> availableActions = new HashMap<>();
 
@@ -163,6 +163,7 @@ public class AynikConsole extends Observable {
     public void makeThePlayerMove(Action action) throws Exception {
         ArrayList<Position> availablePosition = this.calculateAvailablePosition(action instanceof ActionJetpack);
 
+        System.out.println("--------------------------------");
 
         HashMap<Character, Position> availablePositions = new HashMap<>();
         int j = 0;
@@ -318,5 +319,14 @@ public class AynikConsole extends Observable {
     public void printSuccessfulUse(Item item) {
         System.out.println("Use of " + item.name + " was successful");
         System.out.println();
+    }
+
+    public void printEnd() {
+        System.out.println();
+        this.story.printEnd();
+    }
+
+    public void printUnluckyParachute() {
+        System.out.println("You were not really lucky and have been drop on a deathly location...");
     }
 }

@@ -25,7 +25,8 @@
                     "type": "attack",
                     "success": true,
                     "needTeammate": true,
-                    "loseTeammate": true
+                    "loseTeammate": true,
+                    "context": "You need support to pass here..."
                 },
                 {
                     "type": "escape",
@@ -150,17 +151,42 @@
             "obstacle": "Tank is on fire"
         },
         "C1": {
-            // TODO arseny
         },
         "C2": {
-            // TODO arseny
+            "type": "normal",
+            "actions": [
+                {
+                    "type": "attack",
+                    "success": true,
+                    "context": [
+                        "Two aliens are attacking you, but they are as big as a bird.",
+                        "So no problem to kill them!"
+                    ]
+                },
+                {
+                    "type": "escape",
+                    "success": false,
+                    "context": [
+                        "Those two aliens are jumping on your back, and implant larvas,",
+                        "that start to eat your inside..."
+                    ]
+                },
+                "jetpack"
+            ]
         },
         "C3": {
-            // TODO arseny
+            "type": "death",
+            "story": [
+                "Missile of close air support creates heath of bloodbath...",
+                "right in the place where you stood."
+            ]
         },
         "C4": {
             "type": "death",
-            "story": "Explosion"
+            "story": [
+                "You step on the soil covered ",
+                "with napalm and die!"
+            ]
         },
         "C5": {
             "type": "death",
@@ -178,18 +204,89 @@
                 "Lucky alien..."
             ]
         },
-        "D1": {},
+        "D1": {
+            "type": "normal",
+            "context": [
+                "Nothing is happening here.",
+                "Just comrades running in every direction,",
+                "wondering which aliens to shoot down"
+            ]
+        },
         "D2": {},
-        "D3": {},
-        "D4": {},
-        "D5": {},
-        "D6": {},
+        "D3": {
+            "type": "normal",
+            "actions": [
+                "jetpack",
+                {
+                    "type": "attack",
+                    "success": true,
+                    "needTeammate": true,
+                    "loseTeammate": true,
+                    "context": "You need support to pass here..."
+                },
+                {
+                    "type": "escape",
+                    "success": false
+                }
+            ]
+        },
+        "D4": {
+            "type": "death",
+            "story": [
+                "You think you walk into hell, but no",
+                "it's simply napalm which burns you to ahes."
+            ]
+        },
+        "D5": {
+            "type": "normal",
+            "actions": [
+                {
+                    "type": "attack",
+                    "success": true,
+                    "needTeammate": true,
+                    "loseTeammate": true,
+                    "context": [
+                        "Marauder jackal assaults you, need a teammate",
+                        "to get over this monster."
+                    ]
+                },
+                "jetpack",
+                {
+                    "type": "escape",
+                    "success": true,
+                    "context": [
+                        "You could escape this monster that start to focus on a other target.."
+                    ]
+                }
+            ]
+        },
+        "D6": {
+            "type": "end"
+        },
         "E1": {},
-        "E2": {},
-        "E3": {},
+        "E2": {
+            "type": "death",
+            "story": [
+                "Airflow from the turbine of fallen aircraft swamps you in.",
+                "Now you're just pâté."
+            ]
+        },
+        "E3": {
+            "type": "death",
+            "story": [
+                "B-alien attacks you from behind...",
+                "Your jetpack explodes momentally!"
+            ]
+        },
         "E4": {},
         "E5": {},
-        "E6": {}
+        "E6": {
+            "type": "death",
+            "story": [
+                "You were so close...",
+                "but alpha-alien cowardly attacks from under the ground."
+            ]
+        }
     },
     "story": {
         "intro": [
@@ -227,7 +324,12 @@
             "",
             "We then try to learn from our mistake/experience, and try to escape the war field."
         ],
-        "end": []
+        "end": [
+            "You made it!!",
+            "",
+            "You find a helicopter fly far away with it.",
+            "Well done soldier. Thumbs up."
+        ]
     }
 }
 }

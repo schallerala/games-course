@@ -10,7 +10,10 @@ import player.item.Item;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by schaller on 05/02/16.
@@ -22,20 +25,16 @@ public class Aynik {
     private static AynikCompiler compiler;
 
     private AynikTicker ticker;
-    private AynikItemsRepo itemsRepo;
     private AynikMap map;
     private AynikConsole console;
-    private AynikStory story;
 
     private Player player;
 
-    public Aynik(AynikTicker ticker, AynikItemsRepo itemsRepo, AynikMap map, AynikConsole console, Player player, AynikStory story) {
+    public Aynik(AynikTicker ticker, AynikMap map, AynikConsole console, Player player) {
         this.ticker = ticker;
-        this.itemsRepo = itemsRepo;
         this.map = map;
         this.console = console;
         this.player = player;
-        this.story = story;
     }
 
     public static void main (String[] args) {
@@ -66,7 +65,7 @@ public class Aynik {
         console.setTicker(ticker);
         console.setMap(map);
 
-        Aynik game = new Aynik(ticker, itemsRepo, map, console, player, story);
+        Aynik game = new Aynik(ticker, map, console, player);
 
         console.setGame(game);
 
@@ -79,17 +78,21 @@ public class Aynik {
         this.randomizePlayerLocation();
 
         this.console.printLanding();
-        this.arrivingLocation();
-        while (this.player.isAlive()) {
+        this.arrivingLocation(true);
+        while (this.player.isAlive() && ! this.player.won()) {
             this.console.playerAction();
             this.ticker.next();
         }
     }
 
-    public void arrivingLocation() {
+    public void arrivingLocation(boolean justParachute) {
         Location playerLocation = this.player.currentLocation;
-        if (this.player.currentLocation.type == LocationTypes.death) {
+        if (playerLocation.type == LocationTypes.end) {
+            this.player.win = true;
+            this.console.printEnd();
+        } else if (this.player.currentLocation.type == LocationTypes.death) {
             LocationDeath deathLocation = (LocationDeath) playerLocation;
+            this.console.printUnluckyParachute();
             this.playerDie();
             this.console.printContext(deathLocation.story);
         } else {
@@ -109,23 +112,21 @@ public class Aynik {
     }
 
     private void randomizePlayerLocation() {
-//        HashMap<Position, Location> row = this.map.getRow(1);
-//        ArrayList<Position> positionCandidates = new ArrayList<>();
-//
-//        for (Map.Entry<Position, Location> positionLocationEntry : row.entrySet()) {
-//            Location location = positionLocationEntry.getValue();
-//            if (location.type == LocationTypes.obstacle) continue;
-//
-//            positionCandidates.add(positionLocationEntry.getKey());
-//        }
-//
-//        int candidatesSize = positionCandidates.size();
-//        int randomPositionIndex = new Random().nextInt(candidatesSize);
-//        Position firstPosition = positionCandidates.get(randomPositionIndex);
+        HashMap<Position, Location> row = this.map.getRow(1);
+        ArrayList<Position> positionCandidates = new ArrayList<>();
 
-//        this.player.changeLocation(firstPosition, row.get(firstPosition));
-        Position firstPosition = this.map.getPosition('B', 1);
-        this.player.changeLocation(firstPosition, this.map.get(firstPosition));
+        for (Map.Entry<Position, Location> positionLocationEntry : row.entrySet()) {
+            Location location = positionLocationEntry.getValue();
+            if (location.type == LocationTypes.obstacle) continue;
+
+            positionCandidates.add(positionLocationEntry.getKey());
+        }
+
+        int candidatesSize = positionCandidates.size();
+        int randomPositionIndex = new Random().nextInt(candidatesSize);
+        Position firstPosition = positionCandidates.get(randomPositionIndex);
+
+        this.player.changeLocation(firstPosition, row.get(firstPosition));
     }
 
     public void applyAction(Action action) {
@@ -199,6 +200,6 @@ public class Aynik {
 
     public void movePlayerTo(Position position) {
         this.player.changeLocation(position, this.map.get(position));
-        this.arrivingLocation();
+        this.arrivingLocation(false);
     }
 }

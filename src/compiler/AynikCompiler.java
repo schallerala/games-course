@@ -94,6 +94,9 @@ public class AynikCompiler {
             case "obstacle":
                 newLocation = new LocationObstacle(locationJN);
                 break;
+            case "end":
+                newLocation = new LocationEnd();
+                break;
         }
 
         return newLocation;
@@ -116,11 +119,14 @@ public class AynikCompiler {
     }
 
     private void loadStory() {
-        JsonNode storyJN = this.jsonNode.get("story");
         AynikStory story = AynikStory.getInstance();
+        JsonNode storyJN = this.jsonNode.get("story");
 
         for (JsonNode introPart : storyJN.get("intro")) {
             story.addToIntro(introPart.asText());
+        }
+        for (JsonNode introPart : storyJN.get("end")) {
+            story.addToEnd(introPart.asText());
         }
     }
 }
