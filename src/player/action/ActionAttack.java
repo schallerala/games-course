@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class ActionAttack extends Action {
 
     public boolean needTeammate;
+    public boolean loseTeammate;
 
     public ArrayList<String> rewards;
 
@@ -18,6 +19,7 @@ public class ActionAttack extends Action {
         super("Attack");
         this.success = success;
         this.needTeammate = false;
+        this.loseTeammate = false;
 
         this.rewards = new ArrayList<>();
     }
@@ -41,6 +43,9 @@ public class ActionAttack extends Action {
 
         if (actionJN.has("needTeammate") && actionJN.get("needTeammate").asBoolean()) {
             actionAttack.needTeammate = true;
+        }
+        if (actionJN.has("loseTeammate") && actionJN.get("loseTeammate").asBoolean()) {
+            actionAttack.loseTeammate = true;
         }
 
         if (actionJN.has("rewards")) {

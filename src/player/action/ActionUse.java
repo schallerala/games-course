@@ -8,16 +8,11 @@ import player.item.Item;
 public class ActionUse extends Action {
 
     public Item item;
-    public boolean any;
 
     public ActionUse(Item item) {
-        super("Use");
+        super("Use " + item.name);
 
         this.item = item;
-        this.any = item == null;
     }
 
-    public void setAny(boolean any) {
-        this.any = any;
-    }
 }

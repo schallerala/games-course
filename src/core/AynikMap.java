@@ -47,4 +47,16 @@ public class AynikMap {
 
         return returnList;
     }
+
+    public Position getPosition (char x, int y) {
+        for (Position position : locations.keySet()) {
+            if (position.x == x && position.y == y) return position;
+        }
+
+        return null;
+    }
+
+    public Location get(Position position) {
+        return this.locations.get(position);
+    }
 }

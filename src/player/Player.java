@@ -23,6 +23,8 @@ public class Player {
 
     public ArrayList<Item> items;
 
+    public boolean usedJetpack;
+
     public static Player getInstance() {
         return ourInstance;
     }
@@ -30,6 +32,7 @@ public class Player {
     private Player() {
         this.alive = true;
         this.asTeammate = false;
+        this.usedJetpack = false;
         this.items = new ArrayList<>();
     }
 
@@ -57,5 +60,17 @@ public class Player {
 
     public void getNewItem (Item item) {
         this.items.add(item);
+    }
+
+    public boolean hasItem(Item item) {
+        return this.items.contains(item);
+    }
+
+    public void addItems(ArrayList<Item> items) {
+        this.items.addAll(items);
+    }
+
+    public void usedItem(Item item) {
+        this.items.remove(item);
     }
 }

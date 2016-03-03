@@ -24,7 +24,8 @@
                 {
                     "type": "attack",
                     "success": true,
-                    "needTeammate": true
+                    "needTeammate": true,
+                    "loseTeammate": true
                 },
                 {
                     "type": "escape",
@@ -49,11 +50,13 @@
                 "jetpack",
                 {
                     "type": "escape",
-                    "success": false
+                    "success": false,
+                    "context": "The aliens are catching up with us, and we are done for it..."
                 },
                 {
                     "type": "attack",
-                    "success": false
+                    "success": false,
+                    "context": "We could kill a few of them, but more are coming..."
                 }
             ]
         },
@@ -94,11 +97,6 @@
                         "put it in miserable condition",
                         "it's how you could defeat this beast!"
                     ]
-                },
-                {
-                    "type": "use",
-                    "success": false,
-                    "context": "Nothing can do anything against this huge alien"
                 }
             ]
         },
@@ -127,6 +125,7 @@
                 {
                     "type": "use",
                     "item": "grenade",
+                    "success": true,
                     "conditions": [
                         {
                             "item": "shield",

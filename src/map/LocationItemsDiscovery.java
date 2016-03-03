@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public class LocationItemsDiscovery extends Location {
 
     public ArrayList<Item> items;
-    public String context;
 
     public LocationItemsDiscovery(JsonNode rawLocation) {
         super(LocationTypes.itemsDiscovery, rawLocation);

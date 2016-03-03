@@ -22,7 +22,6 @@ public class ActionUseConditions extends ActionUse {
         super(actionUse.item);
         this.setContext(actionUse.context);
         this.setSuccess(actionUse.success);
-        this.setAny(actionUse.any);
 
         this.conditions = new ArrayList<>();
     }

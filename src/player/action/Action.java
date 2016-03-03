@@ -22,4 +22,8 @@ public abstract class Action {
     public void setContext(String context) {
         this.context = context;
     }
+
+    public boolean hasContext() {
+        return this.context != null && this.context.length() > 0;
+    }
 }
