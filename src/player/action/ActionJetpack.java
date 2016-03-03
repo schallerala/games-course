@@ -5,8 +5,8 @@ package player.action;
  */
 public class ActionJetpack extends Action {
 
-
     public ActionJetpack() {
         super("Jet pack");
+        this.success = true;
     }
 }

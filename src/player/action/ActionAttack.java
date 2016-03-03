@@ -10,9 +10,6 @@ import java.util.ArrayList;
  */
 public class ActionAttack extends Action {
 
-    public boolean success;
-    public String context;
-
     public boolean needTeammate;
 
     public ArrayList<String> rewards;

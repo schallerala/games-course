@@ -21,8 +21,10 @@ public class AynikItemsRepo {
     }
 
     public Item find(String itemStr) {
+        itemStr = itemStr.toLowerCase();
+
         for (Item item : items) {
-            if (item.name.equals(itemStr)) return item;
+            if (item.name.toLowerCase().equals(itemStr)) return item;
         }
 
         return null;
