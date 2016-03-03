@@ -3,6 +3,7 @@ package map;
 import com.fasterxml.jackson.databind.JsonNode;
 import compiler.CompilerHelper;
 import core.AynikItemsRepo;
+import player.action.ActionContinue;
 import player.item.Item;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class LocationItemsDiscovery extends Location {
 
     public LocationItemsDiscovery(JsonNode rawLocation) {
         super(LocationTypes.itemsDiscovery, rawLocation);
+        this.actions.add(new ActionContinue());
     }
 
     @Override
@@ -28,7 +30,7 @@ public class LocationItemsDiscovery extends Location {
     protected void compileRawLocation(JsonNode rawLocation) {
         // items
         AynikItemsRepo itemsRepo = AynikItemsRepo.getInstance();
-        for (JsonNode itemJN : rawLocation.findPath("items")) {
+        for (JsonNode itemJN : rawLocation.get("items")) {
             Item item = itemsRepo.find(itemJN.asText());
             this.items.add(item);
         }
@@ -37,7 +39,7 @@ public class LocationItemsDiscovery extends Location {
         CompilerHelper compilerHelper = CompilerHelper.getInstance();
 
         if (rawLocation.has("context")) {
-            this.context = compilerHelper.getString(rawLocation.findPath("context"));
+            this.context = compilerHelper.getString(rawLocation.get("context"));
         }
     }
 

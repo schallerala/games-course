@@ -19,4 +19,8 @@ public class AynikTicker {
     public int getTick() {
         return tick;
     }
+
+    public void next() {
+        tick++;
+    }
 }

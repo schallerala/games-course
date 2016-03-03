@@ -28,8 +28,11 @@ public class LocationObstacle extends Location {
 
     @Override
     protected void compileRawLocation(JsonNode rawLocation) {
-        this.obstacle = rawLocation.findPath("obstacle").asText();
-        for (JsonNode position : rawLocation.findPath("linkedLocation")) {
+        this.obstacle = rawLocation.get("obstacle").asText();
+
+        if ( ! rawLocation.has("linkedLocation")) return;
+
+        for (JsonNode position : rawLocation.get("linkedLocation")) {
             try {
                 this.linkedLocation.add(new Position(position.asText()));
             } catch (Exception e) {

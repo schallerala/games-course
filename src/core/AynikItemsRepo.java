@@ -22,7 +22,7 @@ public class AynikItemsRepo {
 
     public Item find(String itemStr) {
         for (Item item : items) {
-            if (item.getName().equals(itemStr)) return item;
+            if (item.name.equals(itemStr)) return item;
         }
 
         return null;

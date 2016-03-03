@@ -5,8 +5,6 @@ package player.action;
  */
 public class ActionHide extends Action {
 
-    public String context;
-
     public ActionHide(String context) {
         super("Hide");
 

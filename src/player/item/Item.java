@@ -3,15 +3,15 @@ package player.item;
 /**
  * Created by schaller on 08/02/16.
  */
-public class Item {
+public abstract class Item {
 
-    private String name;
+    public String name;
 
-    public Item(String name) {
+    // if an object is usable in the action list
+    public boolean usable;
+
+    public Item(String name, boolean usable) {
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
+        this.usable = usable;
     }
 }

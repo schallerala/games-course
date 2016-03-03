@@ -13,6 +13,8 @@ public class CompilerHelper {
     }
 
     public String getString (JsonNode node) {
+        if (node == null) return null;
+
         if (node.isArray()) {
             String returnStr = "";
             for (JsonNode jsonNode : node) {

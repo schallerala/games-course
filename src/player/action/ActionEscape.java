@@ -5,7 +5,6 @@ package player.action;
  */
 public class ActionEscape extends Action {
 
-
     public ActionEscape() {
         super("Escape");
     }

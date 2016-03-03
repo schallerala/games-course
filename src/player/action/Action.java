@@ -6,8 +6,20 @@ package player.action;
 public abstract class Action {
 
     public String action;
+    public boolean success;
+    public String context;
 
     public Action(String action) {
         this.action = action;
+        this.success = false;
+        this.context = "";
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public void setContext(String context) {
+        this.context = context;
     }
 }

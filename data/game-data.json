@@ -4,7 +4,7 @@
         "jetpack",
         "escape",
         "attack",
-        "useItem"
+        "use"
     ],
     "items": [
         "grenade",
@@ -16,30 +16,46 @@
             "story": "Comrade tries to shot down an alien and kills you"
         },
         "A2": {
-            "type": "condition",
-            "conditions": [
-                {
-                    "type": "teammate"
-                }
-            ],
+            "type": "normal",
             "context": [
                 "2 aliens are on front of you"
+            ],
+            "actions": [
+                {
+                    "type": "attack",
+                    "success": true,
+                    "needTeammate": true
+                },
+                {
+                    "type": "escape",
+                    "success": false
+                },
+                "jetpack"
             ]
         },
         "A3": {
-            "type": "condition",
-            "conditions": [
+            "type": "normal",
+            "context": [
+                "Looks like there is a hole",
+                "were the aliens are coming out.",
+                "We should better not engage.."
+            ],
+            "actions": [
                 {
-                    "type": "action",
-                    "action": "hide",
-                    "context": "hide behind the tank"
+                    "type": "hide",
+                    "success": true,
+                    "context": "Behind the tank"
+                },
+                "jetpack",
+                {
+                    "type": "escape",
+                    "success": false
                 },
                 {
-                    "type": "action",
-                    "action": "jetpack"
+                    "type": "attack",
+                    "success": false
                 }
-            ],
-            "any": true
+            ]
         },
         "A4": {
             "type": "obstacle",
@@ -62,32 +78,27 @@
             ]
         },
         "B1": {
-            "type": "choice",
-            "choices": [
+            "type": "normal",
+            "actions": [
                 {
-                    "type": "action",
-                    "action": "escape",
+                    "type": "escape",
                     "context": "Escape the big but slow alien"
                 },
+                "jetpack",
                 {
-                    "type": "action",
-                    "action": "jetpack",
-                    "context": "Escape the big but slow alien"
+                    "type": "attack",
+                    "success": true,
+                    "rewards": [ "teammate" ],
+                    "context": [
+                        "A soldier who was fighting this alien,",
+                        "put it in miserable condition",
+                        "it's how you could defeat this beast!"
+                    ]
                 },
                 {
-                    "type": "action",
-                    "action": "attack",
-                    "attack": {
-                        "success": true,
-                        "rewards": [
-                            "teammate"
-                        ],
-                        "context": [
-                            "A soldier who was fighting this alien,",
-                            "put it in miserable condition",
-                            "it's how you could defeat this beast!"
-                        ]
-                    }
+                    "type": "use",
+                    "success": false,
+                    "context": "Nothing can do anything against this huge alien"
                 }
             ]
         },
@@ -111,23 +122,29 @@
             "obstacle": "Crashed aircraft"
         },
         "B5": {
-            "type": "condition",
-            "conditions": [
+            "type": "normal",
+            "actions": [
                 {
-                    "type": "item",
-                    "item": "grenade"
+                    "type": "use",
+                    "item": "grenade",
+                    "conditions": [
+                        {
+                            "item": "shield",
+                            "context": "Need a shield to protect from the blow"
+                        }
+                    ]
                 },
                 {
-                    "type": "item",
-                    "item": "shield"
+                    "type": "attack",
+                    "success": false,
+                    "context": "Too many aliens, you are surrounded by them!"
                 },
                 {
-                    "type": "action",
-                    "action": "use",
-                    "use": "grenade"
+                    "type": "escape",
+                    "success": false,
+                    "context": "Too many aliens, you are surrounded by them!"
                 }
-            ],
-            "context": "You are surrounded by aliens!"
+            ]
         },
         "B6": {
             "type": "obstacle",
@@ -174,6 +191,44 @@
         "E4": {},
         "E5": {},
         "E6": {}
+    },
+    "story": {
+        "intro": [
+            "We are a colonel for the United Forces of Earth. We are doing promotion",
+            "to join our force to fight the Alien invasion. We are doing appearances’ on TV and Ad's.",
+            "After couple of weeks of raging war, we are asked by a general to make a point about our promotion.",
+            "Things end up badly, and tell us that we will be joining the front-lines in 2 days.",
+            "We try to escape all this, by leaving the office but are hit by a car when we get out of the building...",
+            "",
+            "",
+            "We wake up at a military station somewhere in UK. A sergeant comes to pick up",
+            "and brings us to our new comrades and don't believe we are actually a colonel.",
+            "He reply to this \"joke\" by reading our files and quotes: \"Try to desert\".",
+            "When we enter the room with our new buddies, they were betting money on a card game,",
+            "try to hid it because the sergeant would punish them.",
+            "He still finds out and make them eat pieces of the cards.",
+            "",
+            "",
+            "The next day, time to get in the aircraft to jump over France that is already totally invaded.",
+            "We get hit, we lose half of the plane and we can escape and parachute to the beach.",
+            "One of our comrades are close by when we land, he looks on fire, to slice some Aliens.",
+            "But the right after shouting \"LET'S GOOOO!\", a plane crashes over him, poor him.",
+            "We start to run, trying to find a place to hid, meet a huge alien, try to shoot at him,",
+            "but our weapon fails to work, and try to run in the opposite way but slip because of the sand,",
+            "we lay on the floor, turn around and see the alien running to us.",
+            "We try to use our ultimate weapon, and hit the monster in the chest!",
+            "His dark-blue blood start to spill all over us and react like acid, and still die...",
+            "",
+            "",
+            "BUT WE WAKE UP, again at this military station in UK, with the same sergeant,",
+            "everything is the same! We wonder what is going on and end up on the front-lines again,",
+            "we try to help this guy that get hit by the plane, but by trying to help him, we die smashed by the aircraft.",
+            "And... wake up in the camp.",
+            "",
+            "",
+            "We then try to learn from our mistake/experience, and try to escape the war field."
+        ],
+        "end": []
     }
 }
 }

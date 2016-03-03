@@ -1,16 +1,25 @@
 package map;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import compiler.CompilerHelper;
+import core.AynikItemsRepo;
+import player.action.*;
+import player.action.util.ActionUseCondition;
+import player.item.Item;
+
+import java.util.ArrayList;
 
 /**
  * Created by schaller on 07/02/16.
  */
-public abstract class Location {
+public class Location {
 
     public LocationTypes type;
+    public ArrayList<Action> actions;
 
-    public Location(LocationTypes type, JsonNode rawLocation) {
-        this.type = type;
+    public Location(JsonNode rawLocation) {
+        this.type = LocationTypes.normal;
+        this.actions = new ArrayList<>();
 
         this.init();
 
@@ -19,10 +28,74 @@ public abstract class Location {
         this.compileRawLocation(rawLocation);
     }
 
+    public Location(LocationTypes locationTypes, JsonNode rawLocation) {
+        this(rawLocation);
+        this.type = locationTypes;
+    }
+
+
+
     public void init () {}
 
-    protected abstract void compileRawLocation(JsonNode rawLocation);
+    protected void compileRawLocation(JsonNode rawLocation) {
+        for (JsonNode actionJN : rawLocation.get("actions")) {
+            if (actionJN.isObject()) {
+                this.compileComplexAction(actionJN);
+            }
+            else
+            {
+                switch (actionJN.asText()) {
+                    case "jetpack":
+                        this.actions.add( new ActionJetpack() );
+                        break;
+                }
+            }
+        }
+    }
 
-    public void onArrive () {}
+    private void compileComplexAction(JsonNode actionJN) {
+        AynikItemsRepo itemsRepo = AynikItemsRepo.getInstance();
+        CompilerHelper compilerHelper = CompilerHelper.getInstance();
+
+        String context = compilerHelper.getString(actionJN.get("context"));
+
+        switch (actionJN.get("type").asText()) {
+            case "attack":
+                ActionAttack actionAttack = ActionAttack.compileRawAttack(actionJN);
+                this.actions.add(actionAttack);
+                break;
+            case "hide":
+                ActionHide actionHide = new ActionHide(context);
+                actionHide.setSuccess(actionJN.findPath("success").asBoolean(true));
+                this.actions.add(actionHide);
+                break;
+            case "escape":
+                ActionEscape actionEscape = new ActionEscape();
+                if (context != null) actionEscape.setContext(context);
+                actionEscape.setSuccess(actionJN.findPath("success").asBoolean(true));
+                this.actions.add(actionEscape);
+                break;
+            case "use":
+                Item itemToUse = itemsRepo.find(actionJN.findPath("item").asText());
+
+                ActionUse actionUse = new ActionUse(itemToUse);
+                actionUse.setSuccess(actionJN.findPath("success").asBoolean(false));
+                if (context != null) actionUse.setContext(context);
+
+                if (actionJN.has("conditions")) {
+                    ActionUseConditions actionUseConditions = new ActionUseConditions(actionUse);
+                    for (JsonNode conditionJN : actionJN.get("conditions")) {
+                        Item itemNeeded = itemsRepo.find(conditionJN.get("item").asText());
+                        String itemContext = compilerHelper.getString(conditionJN.get("context"));
+                        actionUseConditions.conditions.add(new ActionUseCondition(itemNeeded, itemContext));
+                    }
+                    this.actions.add(actionUseConditions);
+                }
+                else
+                {
+                    this.actions.add(actionUse);
+                }
+        }
+    }
 
 }

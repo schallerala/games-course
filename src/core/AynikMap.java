@@ -1,5 +1,6 @@
 package core;
 
+import javafx.geometry.Pos;
 import map.Location;
 import map.LocationTypes;
 import map.Position;
@@ -27,14 +28,23 @@ public class AynikMap {
         locations.put(position, location);
     }
 
-    public ArrayList<Location> getByType (LocationTypes type) {
-        ArrayList<Location> filtered = new ArrayList<>();
-        for (Location location : this.locations.values()) {
-            if (location.type.equals(type)) {
-                filtered.add(location);
-            }
+    public HashMap<Position, Location> getRow (int y) {
+        HashMap<Position, Location> returnList = new HashMap<>();
+
+        for (Position position : locations.keySet()) {
+            if (position.y == y) returnList.put(position, this.locations.get(position));
         }
 
-        return filtered;
+        return returnList;
+    }
+
+    public HashMap<Position, Location> getCol (char x) {
+        HashMap<Position, Location> returnList = new HashMap<>();
+
+        for (Position position : locations.keySet()) {
+            if (position.x == x) returnList.put(position, this.locations.get(position));
+        }
+
+        return returnList;
     }
 }

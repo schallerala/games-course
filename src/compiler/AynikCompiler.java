@@ -6,8 +6,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.AynikItemsRepo;
 import core.AynikMap;
+import core.AynikStory;
+import player.item.Grenade;
 import player.item.Item;
 import map.*;
+import player.item.Shield;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +33,7 @@ public class AynikCompiler {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(JsonParser.Feature.ALLOW_COMMENTS);
 
-        jsonNode = mapper.readTree(gameData).findPath("AYNIK");
+        jsonNode = mapper.readTree(gameData).get("AYNIK");
 
         if (jsonNode.isMissingNode()) throw new CompilerMissingNodeException("No AYNIK game data found");
     }
@@ -38,10 +41,11 @@ public class AynikCompiler {
     public void prepareGame() throws CompilerMissingNodeException {
         this.loadItems();
         this.loadLocations();
+        this.loadStory();
     }
 
     private void loadLocations() throws CompilerMissingNodeException {
-        JsonNode locationNode = this.jsonNode.findPath("locations");
+        JsonNode locationNode = this.jsonNode.get("locations");
         if (locationNode.isMissingNode()) throw new CompilerMissingNodeException("No locations found in the game data");
 
         AynikMap map = AynikMap.getInstance();
@@ -70,23 +74,16 @@ public class AynikCompiler {
 
     private Location loadLocation(Map.Entry<String, JsonNode> field) {
         JsonNode locationJN = field.getValue();
-        String locationPositionStr = field.getKey();
-        Position locationPosition = null;
-        try {
-            locationPosition = new Position(locationPositionStr);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
 
         Location newLocation = null;
 
-        switch (locationJN.findPath("type").asText()) {
-            case "choice":
-                newLocation = new LocationChoice(locationJN);
-                break;
-            case "condition":
-                newLocation = new LocationCondition(locationJN);
+        if ( ! locationJN.has("type")) {
+            return new LocationObstacle("Unreachable");
+        }
+
+        switch (locationJN.get("type").asText()) {
+            case "normal":
+                newLocation = new Location(locationJN);
                 break;
             case "death":
                 newLocation = new LocationDeath(locationJN);
@@ -97,19 +94,33 @@ public class AynikCompiler {
             case "obstacle":
                 newLocation = new LocationObstacle(locationJN);
                 break;
-            default:
-                newLocation = new LocationObstacle("Unreachable");
         }
 
         return newLocation;
     }
 
     private void loadItems() {
-        JsonNode items = this.jsonNode.findPath("items");
+        JsonNode items = this.jsonNode.get("items");
 
         AynikItemsRepo itemsRepo = AynikItemsRepo.getInstance();
         for (JsonNode item : items) {
-            itemsRepo.addItem( new Item(item.asText()) );
+            switch (item.asText()) {
+                case "grenade":
+                    itemsRepo.addItem( new Grenade() );
+                    break;
+                case "shield":
+                    itemsRepo.addItem( new Shield() );
+            }
+
+        }
+    }
+
+    private void loadStory() {
+        JsonNode storyJN = this.jsonNode.get("story");
+        AynikStory story = AynikStory.getInstance();
+
+        for (JsonNode introPart : storyJN.get("intro")) {
+            story.addToIntro(introPart.asText());
         }
     }
 }
