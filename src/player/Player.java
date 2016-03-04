@@ -79,4 +79,13 @@ public class Player {
     public void usedItem(Item item) {
         this.items.remove(item);
     }
+
+    public void resetPlayer(Position originPosition, Location originLocation) {
+        this.changeLocation(originPosition, originLocation);
+        this.alive = true;
+        this.asTeammate = false;
+        this.usedJetpack = false;
+        this.items = new ArrayList<>();
+        this.win = false;
+    }
 }

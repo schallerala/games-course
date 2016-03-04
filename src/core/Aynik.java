@@ -54,7 +54,6 @@ public class Aynik {
             e.printStackTrace();
         }
 
-        AynikItemsRepo itemsRepo = AynikItemsRepo.getInstance();
         AynikMap map = AynikMap.getInstance();
         Player player = Player.getInstance();
         AynikStory story = AynikStory.getInstance();
@@ -73,15 +72,33 @@ public class Aynik {
     }
 
     public void startPlaying () {
+        Position originPosition;
+        boolean needNewFirstLocation = true;
         this.console.startGame();
 
-        this.randomizePlayerLocation();
+        boolean playerWannaPlay = true;
 
-        this.console.printLanding();
-        this.arrivingLocation(true);
-        while (this.player.isAlive() && ! this.player.won()) {
-            this.console.playerAction();
-            this.ticker.next();
+        this.randomizePlayerLocation();
+        originPosition = this.player.currentPosition;
+        needNewFirstLocation = this.player.currentLocation.type == LocationTypes.death;
+
+        while (playerWannaPlay) {
+            this.console.printLanding();
+            this.arrivingLocation(true);
+            while (this.player.isAlive() && !this.player.won()) {
+                this.console.playerAction();
+                this.ticker.next();
+            }
+
+            playerWannaPlay = this.console.askPlayerWannaTryAgain();
+            if (playerWannaPlay) {
+                if (needNewFirstLocation) {
+                    this.randomizePlayerLocation();
+                    originPosition = this.player.currentPosition;
+                    needNewFirstLocation = this.player.currentLocation.type == LocationTypes.death;
+                }
+                this.player.resetPlayer(originPosition, this.map.get(originPosition));
+            }
         }
     }
 
@@ -92,7 +109,7 @@ public class Aynik {
             this.console.printEnd();
         } else if (this.player.currentLocation.type == LocationTypes.death) {
             LocationDeath deathLocation = (LocationDeath) playerLocation;
-            this.console.printUnluckyParachute();
+            if (justParachute) this.console.printUnluckyParachute();
             this.playerDie();
             this.console.printContext(deathLocation.story);
         } else {

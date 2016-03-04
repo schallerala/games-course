@@ -1,5 +1,6 @@
 package core;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import map.Location;
 import map.LocationObstacle;
 import map.LocationTypes;
@@ -328,5 +329,23 @@ public class AynikConsole extends Observable {
 
     public void printUnluckyParachute() {
         System.out.println("You were not really lucky and have been drop on a deathly location...");
+    }
+
+    public boolean askPlayerWannaTryAgain() {
+        System.out.println();
+        System.out.println("################################");
+        System.out.println(this.player.name + " do you still wanna play?");
+
+        HashMap<Character, Boolean> wantsToContinue = new HashMap<>();
+        for (int i = 0; i < 2; i++) {
+            wantsToContinue.put(this.alphabet[i], i % 2 == 0);
+            System.out.println(
+                    this.alphabet[i] + ")" +
+                    "\t" + (i % 2 == 0 ? "Yes" : "No")
+            );
+        }
+        System.out.println("Do you wanna try again?");
+        Character playerAnswer = reader.nextLine().toUpperCase().charAt(0);
+        return wantsToContinue.containsKey(playerAnswer) && wantsToContinue.get(playerAnswer);
     }
 }
