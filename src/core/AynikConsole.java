@@ -131,11 +131,7 @@ public class AynikConsole extends Observable {
         }
         System.out.println();
 
-        String answerRegex = "[";
-        for (Character character : availableActions.keySet()) {
-            answerRegex += character;
-        }
-        answerRegex += "]";
+        String answerRegex = "[A-" + this.alphabet[j] + "]";
 
         boolean validAnswer = false;
         String playerSelectedAction = "";
@@ -189,11 +185,7 @@ public class AynikConsole extends Observable {
         }
         System.out.println();
 
-        String answerRegex = "[";
-        for (Character character : availablePositions.keySet()) {
-            answerRegex += character;
-        }
-        answerRegex += "]";
+        String answerRegex = "[A-" + this.alphabet[j] + "]";
 
         boolean validAnswer = false;
         String playerSelectedPosition = "";
@@ -344,8 +336,25 @@ public class AynikConsole extends Observable {
                     "\t" + (i % 2 == 0 ? "Yes" : "No")
             );
         }
-        System.out.println("Do you wanna try again?");
-        Character playerAnswer = reader.nextLine().toUpperCase().charAt(0);
-        return wantsToContinue.containsKey(playerAnswer) && wantsToContinue.get(playerAnswer);
+        System.out.println();
+
+        boolean playerWannaContinue = false;
+
+        String answerRegex = "[AB]";
+
+        boolean validAnswer;
+        String playAnswer;
+
+        System.out.println("Do you wanna continue to play");
+        playAnswer = this.reader.nextLine().toUpperCase().trim();
+        validAnswer = playAnswer.matches(answerRegex);
+
+        if ( ! validAnswer) {
+            System.out.println("Not valid answer, guess you don't want to continue anymore");
+            playerWannaContinue = false;
+        }
+        else playerWannaContinue = wantsToContinue.get(playAnswer.charAt(0));
+
+        return playerWannaContinue;
     }
 }

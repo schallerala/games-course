@@ -23,7 +23,6 @@ import java.util.Map;
 public class AynikCompiler {
 
     private JsonNode jsonNode;
-    private File gameData;
 
     public AynikCompiler(File gameData) throws CompilerMissingNodeException, IOException {
         this.init(gameData);
